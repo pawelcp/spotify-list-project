@@ -1,11 +1,12 @@
 import { Button, Center, Input, Flex, Box } from "@chakra-ui/react"
 import { GetServerSideProps } from "next";
 import { useEffect, useState } from "react";
+import { SearchResponse } from "../models/searchTypes";
 
 const Search = () => { 
 
     const [artist, setArtist] = useState('')
-    const [data, setData]:any = useState([])
+    const [data, setData] = useState<SearchResponse>()
 
     useEffect(() => {
         const options = {
@@ -20,8 +21,8 @@ const Search = () => {
         }else{
              const getSearchData = async () => {
                 try{ 
-                const res:any = await fetch(`https://spotify23.p.rapidapi.com/search/?q=${artist}%3CREQUIRED%3E&type=artists&offset=0&limit=10&numberOfTopResults=5`, options) 
-                const data:any = await res.json()
+                const res = await fetch(`https://spotify23.p.rapidapi.com/search/?q=${artist}%3CREQUIRED%3E&type=artists&offset=0&limit=10&numberOfTopResults=5`, options) 
+                const data = await res.json()
                 setData(data)
 
                 }catch(error:any){error.message}
@@ -29,7 +30,8 @@ const Search = () => {
     }}, [artist])
 
 
-    console.log(data.length);
+console.log(data);
+
     
     return(
     <div>
@@ -38,8 +40,8 @@ const Search = () => {
             <Button onClick={()=> {setArtist('young multi')}}>click</Button>
         </Center>
         <Flex flexDirection='column'>
-            {data.length!==0 && data.artists.items.map((artist:any) =>
-            {console.log(data);
+            {data && data.artists.items.map((artist) =>
+            {console.log(data.artists.items);
             
                 return (
                 <Center>
