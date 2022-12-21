@@ -2,6 +2,8 @@ import React, {useEffect, useState } from "react"
 import RankingBox from "../src/components/rankingBox"
 import { GetServerSideProps } from "next";
 import { IndexProps } from "../src/models/RankingProps";
+import { Center, Text } from "@chakra-ui/react";
+import Search from "../src/components/search";
 
 export const getServerSideProps:GetServerSideProps = async () => {
   const options = {
@@ -24,7 +26,11 @@ export default function Home({data}:IndexProps) {
   
   return (
   <>
-   <RankingBox data={data}/>
+    <Search></Search>
+    <Center>
+      <Text fontSize='4xl'>Top 30 artist spotify list</Text>
+    </Center>
+    <RankingBox data={data}/>
   </>
   )
 }
