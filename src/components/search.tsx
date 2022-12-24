@@ -14,7 +14,7 @@ const Search = () => {
             method: 'GET',
             headers: {
                 'X-RapidAPI-Key': '07081e7ec7msh25cb134fe5bd78fp167efcjsn842d232e737d',
-                'X-RapidAPI-Host': 'spotify23.p.rapidapi.com'
+                'X-RapidAPI-Host': 'spotify81.p.rapidapi.com'
             }
         };
         if(artist === ''){
@@ -22,7 +22,7 @@ const Search = () => {
         }else{
              const getSearchData = async () => {
                 try{ 
-                const res = await fetch(`https://spotify23.p.rapidapi.com/search/?q=${artist}%3CREQUIRED%3E&type=artists&offset=0&limit=10&numberOfTopResults=5`, options) 
+                const res = await fetch(`https://spotify81.p.rapidapi.com/search?q=${artist}&type=artists&offset=0&limit=10&numberOfTopResults=5`, options) 
                 const data = await res.json()
                 setData(data)
 
@@ -41,9 +41,7 @@ console.log(data);
             <Button onClick={()=> {setArtist('young multi')}}>click</Button>
         </Center>
         <Flex flexDirection='column'>
-            {data && data.artists.items.map((artist) =>
-            {console.log(data.artists.items);
-            
+            {data && data.artists.items.map((artist) => {
                 return (
                 <Center>
                     <Box rounded='lg' boxShadow='dark-lg' w={{xl:'39vw',md:'60vw', sm:'80vw'}} h='150' textColor='white' mt='4' bg='blackAlpha.800'>
@@ -63,7 +61,7 @@ console.log(data);
                             </Box>
                             </Center>
                             <Spacer></Spacer>
-                            <Image rounded='lg' h={{md:'150',sm:'150'}} maxH='150' minW={{sm:'150', md:'auto'}} src={artist.data.visuals.avatarImage.sources[0].url}></Image>
+                            <Image rounded='lg' h={{md:'150',sm:'150'}} maxH='150' minW={{sm:'150', md:'auto'}} src={artist.data.visuals.avatarImage?.sources[0].url}></Image>
                             
                         </Flex>
                     </Box>
