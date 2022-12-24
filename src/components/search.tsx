@@ -49,7 +49,8 @@ console.log(data);
                             <Center>
                             <Box ml='3' w='60' maxW='190px' >
                                 <Center>
-                                <Text fontSize='2xl' fontWeight='medium'>{artist.data.profile.name}</Text>
+                                {artist.data.profile.name.length < 17 && <Text fontSize='2xl' fontWeight='medium'>{artist.data.profile.name}</Text>}
+                                {artist.data.profile.name.length > 17 && <Text fontSize='xl' fontWeight='medium'>{artist.data.profile.name}</Text>}
                                 </Center>
                                 <Center>
                                 <Link color='green.500' href={artist.data.uri}>Listen on spotify
@@ -61,7 +62,10 @@ console.log(data);
                             </Box>
                             </Center>
                             <Spacer></Spacer>
-                            <Image rounded='lg' h={{md:'150',sm:'150'}} maxH='150' minW={{sm:'150', md:'auto'}} src={artist.data.visuals.avatarImage?.sources[0].url}></Image>
+                            {artist.data.visuals.avatarImage !== null && 
+                            <Image rounded='lg' h={{md:'150',sm:'150'}} maxH='150' minW={{sm:'150', md:'auto'}} src={artist.data.visuals.avatarImage.sources[0].url}></Image>}
+                            {artist.data.visuals.avatarImage === null && 
+                            <Image rounded='lg' h={{md:'150',sm:'150'}} maxH='150' minW={{sm:'150', md:'auto'}} src='https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'></Image>}
                             
                         </Flex>
                     </Box>

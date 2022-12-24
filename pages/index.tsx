@@ -27,7 +27,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 export default function Home({ data }: IndexProps) {
   return (
-    <Box w="full" h="sreen" background="gray.500">
+    <Box background="#AAAAAA">
+      <style>{'body { background-color: #AAAAAA }'}</style>
       <Search></Search>
       <Center>
         <Text fontSize="4xl" fontWeight="bold" color="white" marginTop="4vh">
