@@ -4,28 +4,12 @@ import { GetServerSideProps } from "next";
 import { IndexProps } from "../src/models/RankingProps";
 import { Box, Center, Text, Container } from "@chakra-ui/react";
 import Search from "../src/components/search";
+import { getTop30 } from '../lib/getTop30'
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const options = {
-    method: "GET",
-    headers: {
-      "X-RapidAPI-Key": "07081e7ec7msh25cb134fe5bd78fp167efcjsn842d232e737d",
-      "X-RapidAPI-Host": "spotify81.p.rapidapi.com",
-    },
-  };
+export default function Home() {
 
-  const res = await fetch(
-    "https://spotify81.p.rapidapi.com/top_20_by_monthly_listeners",
-    options
-  );
-  const data = await res.json();
 
-  return {
-    props: { data },
-  };
-};
 
-export default function Home({ data }: IndexProps) {
   return (
     <Box background="#AAAAAA">
       <style>{'body { background-color: #AAAAAA }'}</style>
@@ -35,7 +19,7 @@ export default function Home({ data }: IndexProps) {
           Top 30 artist spotify list
         </Text>
       </Center>
-      <RankingBox data={data} />
+      <RankingBox/>
     </Box>
   );
 }
