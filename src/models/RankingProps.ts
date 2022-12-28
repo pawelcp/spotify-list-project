@@ -6,4 +6,4 @@ export interface RankingType {
     artist: string,
     monthlyListeners: null,
     rank: number
-  }
+  }//qweqwewq
