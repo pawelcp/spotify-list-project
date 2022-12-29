@@ -4,7 +4,7 @@ export async function getTop30() {
     const options = {
         method: "GET",
         headers: {
-          "X-RapidAPI-Key": "259cbdc1aamshfaeffc36ba0659ep1fa44ajsn56dcf1a30af7",
+          "X-RapidAPI-Key": "d4c8163737msh342b5e054129b7ep176871jsn002757b82d94",
           "X-RapidAPI-Host": "spotify81.p.rapidapi.com",
         },
       };

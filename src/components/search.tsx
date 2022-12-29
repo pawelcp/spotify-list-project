@@ -7,8 +7,9 @@ import { getArtistSearch } from "../../lib/getArtistSearch";
 
 const Search = () => { 
 
-    const [artist, setArtist] = useState('')
+    const [artist, setArtist] = useState<string>('')
     const [data, setData] = useState<SearchResponse>()
+    const [artistName, setArtistName] = useState<string>('')
 
     useEffect(() => {
         if(artist === ''){
@@ -25,17 +26,17 @@ const Search = () => {
     }}, [artist])
 
 
-console.log(data);
+console.log(artist);
 
     
     return(
     <div>
         <Center>
-            <Input w='20vw' my='2' textColor='white' variant='flushed' focusBorderColor='green.500' placeholder='Search artists' _placeholder={{ opacity: 1, color: 'white' }} value={artist} /*onChange={(e)=>{setArtist(e.target.value)}}*/></Input>
-            <Button onClick={()=> {setArtist('young multi')}}>click</Button>
+            <Input w={{md:'20vw',sm:'50vw'}} my='2' textColor='white' variant='flushed' focusBorderColor='green.500' placeholder='Search artists' _placeholder={{ opacity: 1, color: 'white' }} value={artistName} onChange={(e)=>{setArtistName(e.target.value)}}></Input>
+            <Button onClick={()=> {setArtist(artistName)}}>click</Button>
         </Center>
         <Flex flexDirection='column'>
-        {data && data.artists.items.map((artist) => {
+        {artist !== '' && data && data.artists.items.map((artist) => {
                 return (
                 <Center>
                     <Box rounded='lg' boxShadow='dark-lg' w={{xl:'39vw',md:'60vw', sm:'80vw'}} h='150' textColor='white' mt='4' bg='blackAlpha.800'>
@@ -43,8 +44,8 @@ console.log(data);
                             <Center>
                             <Box ml='3' w='60' maxW='190px' >
                                 <Center>
-                                {artist.data.profile.name.length < 17 && <Text fontSize='2xl' fontWeight='medium'>{artist.data.profile.name}</Text>}
-                                {artist.data.profile.name.length > 17 && <Text fontSize='xl' fontWeight='medium'>{artist.data.profile.name}</Text>}
+                                {artist.data.profile.name.length < 15 && <Text fontSize='2xl' fontWeight='medium'>{artist.data.profile.name}</Text>}
+                                {artist.data.profile.name.length > 15 && <Text fontSize='xl' fontWeight='medium'>{artist.data.profile.name}</Text>}
                                 </Center>
                                 <Center>
                                 <Link color='green.500' href={artist.data.uri}>Listen on spotify

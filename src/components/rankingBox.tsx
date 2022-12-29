@@ -10,6 +10,7 @@ const RankingBox = () => {
 
   const [top30, setTop30] = useState<IndexProps>()
   const [artistData, setArtistData] = useState<SearchResponse>()
+  const [open, setOpen] = useState<boolean>(false)
   useEffect(()=>{
     try{
       const getTop30Handler = async() => { 
@@ -19,66 +20,70 @@ const RankingBox = () => {
     getTop30Handler()
     }catch(error:any){return error.message} 
   },[])
-  useEffect(() => {
-         const getSearchData = async () => {
-          if(top30?.data)
-            try{ 
-            const limit = '1'
-            for(const artistLoop of top30.data){
-            const data = await getArtistSearch(artistLoop.artist, limit)
-            setArtistData(data)}
 
-            }catch(error:any){error.message}
-        };getSearchData();
-},[])
 console.log(artistData);
-
-
+console.log(open);
 
 
   
-      return (
-        <Center>
-        <Grid m='auto' templateColumns={{md:'repeat(3, 1fr)', sm:'repeat(1, 1fr)'}} marginTop='2vh'  w='90%' gap='4'>
-        {top30!==undefined && top30.data.map((artist:RankingType) =>
-        {return(
-        <GridItem w='60%'>
-           {top30!==undefined && artistData?.artists.items.map((artistData) => {
+  return (
+    <Center>
+    <Grid  templateColumns={{md:'repeat(3, 1fr)', sm:'repeat(1, 1fr)'}} marginTop='2vh'  w='80%' gap='8'>
+    {top30!==undefined&& top30.data.map((artistRank:RankingType) =>
+        {return( 
+        <GridItem w='100%'> 
+           <Box onClick={async() => { const limit = '1'
+            const data =  await getArtistSearch(artistRank.artist,limit); setArtistData(data);setOpen(true)
+              }} boxShadow='2xl' cursor='pointer' w='100%' borderRadius='lg' bg='#191414' h='12vh' overflow='hidden' _hover={{bg:'black'}}>  
+               <Flex h='12vh'>
+                 <Center>
+                 <Text justifySelf='center' fontSize='2xl' ml='4' fontWeight='medium' color='white'>{artistRank.artist}</Text> 
+                 </Center>
+                 <Spacer ></Spacer>
+                 <Flex flexDirection='column'>
+                 <Box justifySelf='center' margin='auto' pr='2'>
+                  <Text fontSize='md'  textAlign='center' color='white'>Rank</Text>
+                  <Text fontSize='3xl' textAlign='center' color='white' >{artistRank.rank}</Text>
+                 </Box>
+                 </Flex>
+               </Flex>
+           </Box>
+        </GridItem>)} )}
+    </Grid>
+        {open?(
+          <Flex onClick={()=>{setOpen(false)}} position="fixed" top='0' left='0'  bg="rgba(0, 0, 0, .7)"  w='100vw' h='100vh'>
+          {artistData && artistData.artists?.items.map((artist) => {
                 return (
-                <Center>
-                    <Box rounded='lg' boxShadow='dark-lg' w={{xl:'30vw',md:'50vw', sm:'70vw'}} h='150' textColor='white' mt='4' bg='blackAlpha.800'>
+                <Center mx='auto'>
+                    <Box rounded='lg' p='2' margin='0 auto' boxShadow='dark-lg' w={{xl:'39vw',md:'60vw', sm:'80vw'}}  textColor='white' bg='#191414'>
                         <Flex>
                             <Center>
-                            <Box w='60' maxW='190px' >
-                                <Center>
-                                {artistData.data.profile.name.length < 17 && <Text fontSize='2xl' fontWeight='medium'>{artistData.data.profile.name}</Text>}
-                                {artistData.data.profile.name.length > 17 && <Text fontSize='xl' fontWeight='medium'>{artistData.data.profile.name}</Text>}
-                                </Center>
-                                <Center>
-                                <Link color='green.500' href={artistData.data.uri}>Listen on spotify
-                                    <Center>
-                                    <BsSpotify></BsSpotify>
-                                    </Center>
-                                </Link>
-                                </Center>
-                            </Box>
-                                <Flex flexDirection='column' mr='3' mt='2'>
-                                  <Text fontSize='md' textAlign='center' color='white'>Rank</Text>
-                                  <Text fontSize='4xl'textAlign='center' color='white' >{artist.rank}</Text>
-                                </Flex>
+                              <Box ml='3'  w='60' maxW='190px' >
+                                  <Center>
+                                    {artist.data.profile.name.length < 17 && <Text fontSize='2xl' fontWeight='medium'>{artist.data.profile.name}</Text>}
+                                    {artist.data.profile.name.length > 17 && <Text fontSize='xl' fontWeight='medium'>{artist.data.profile.name}</Text>}
+                                  </Center>
+                                  <Center>
+                                    <Link color='green.500' href={artist.data.uri}>Listen on spotify
+                                      <Center>
+                                        <BsSpotify></BsSpotify>
+                                      </Center>
+                                    </Link>
+                                  </Center>
+                              </Box>
                             </Center>
                             <Spacer></Spacer>
-                            {artistData.data.visuals.avatarImage !== null && 
-                            <Image rounded='lg' h={{md:'150',sm:'150'}} maxH='150' minW={{sm:'150', md:'auto'}} src={artistData.data.visuals.avatarImage.sources[0].url}></Image>}
-                            {artistData.data.visuals.avatarImage === null && 
+                            {artist.data.visuals.avatarImage !== null && 
+                            <Image rounded='lg' h={{md:'150',sm:'150'}} maxH='150' minW={{sm:'150', md:'auto'}} src={artist.data.visuals.avatarImage.sources[0].url}></Image>}
+                            {artist.data.visuals.avatarImage === null && 
                             <Image rounded='lg' h={{md:'150',sm:'150'}} maxH='150' minW={{sm:'150', md:'auto'}} src='https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png'></Image>}
                             
                         </Flex>
                     </Box>
                 </Center>)}
             )}
-        </GridItem>)} )}
-        </Grid>
+          </Flex>
+        )  :null}
         </Center>
       )
 }

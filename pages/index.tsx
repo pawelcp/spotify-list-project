@@ -11,11 +11,11 @@ export default function Home() {
 
 
   return (
-    <Box background="#AAAAAA">
-      <style>{'body { background-color: #AAAAAA }'}</style>
+    <Box background="#1DB954">
+      <style>{'body { background-color: #1DB954 }'}</style>
       <Search></Search>
       <Center>
-        <Text fontSize="4xl" fontWeight="bold" color="white" marginTop="4vh">
+        <Text fontSize={{md:"4xl",sm:'2xl'}} fontWeight="bold" color="white" marginTop="5vh">
           Top 30 artist spotify list
         </Text>
       </Center>
